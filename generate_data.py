@@ -4,7 +4,7 @@ from pyspark.sql.window import Window
 from pyspark.sql import Row
 import random
 import datetime as dt
-import configs.schema_definitions as sc
+import schema_definitions as sc
 
 def customer_id_generator(i):
     alpha_dict = {0:'A',1:'B',2:'C',3:'D',4:'E',5:'F',6:'F',7:'G',8:'H',9:'I'}
