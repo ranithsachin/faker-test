@@ -2,9 +2,9 @@ from faker import Faker
 from pyspark.sql.functions import col, year, month, sum, rank
 from pyspark.sql.window import Window
 from pyspark.sql import Row
+from pyspark.sql.types import StructType, StructField, IntegerType, StringType, DateType,FloatType,TimestampType
 import random
 import datetime as dt
-import schema_definitions as sc
 
 def customer_id_generator(i):
     alpha_dict = {0:'A',1:'B',2:'C',3:'D',4:'E',5:'F',6:'F',7:'G',8:'H',9:'I'}
@@ -16,7 +16,24 @@ def customer_id_generator(i):
 
 def generate_customer_data():
     fake = Faker()
-    customer_schema = sc.customer_schema
+
+    customer_schema = StructType([StructField("CUSTOMER_NUMBER", StringType()),
+                              StructField("FIRST_NAME", StringType()),
+                              StructField("LAST_NAME", StringType()),
+                              StructField("BIRTHDATE", DateType()),
+                              StructField("SSN", StringType()),
+                              StructField("CUSTOMER_ADDRESS_STREET", StringType()),
+                              StructField("CUSTOMER_ADDRESS_HOUSE_NUMBER", StringType()),
+                              StructField("CUSTOMER_ADDRESS_CITY", StringType()),
+                              StructField("CUSTOMER_ADDRESS_STATE", StringType()),
+                              StructField("CUSTOMER_ADDRESS_COUNTRY", StringType()),
+                              StructField("CUSTOMER_ADDRESS_ZIP_CODE", StringType()),
+                              StructField("CREDITCARD_NUMBER", StringType()),
+                              StructField("CREDITCARD_EXPIRATION_DATE", StringType()),
+                              StructField("CREDITCARD_VERIFICATION_CODE", StringType()),
+                              StructField("CREDITCARD_PROVIDER", StringType())
+                              ])
+    
     new_df = spark.createDataFrame([],customer_schema)
 
     for i in range(1,100):
