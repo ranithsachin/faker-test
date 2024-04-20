@@ -43,4 +43,35 @@ def generate_customer_data():
 
     new_df.write.mode('append').saveAsTable('CUSTOMER_DATA')
 
-generate_customer_data()
+def generate_items_data():
+    fake = Faker()
+
+    items_schema = StructType([
+        StructField("ITEM_ID", IntegerType()),
+        StructField("ITEM_EAN", StringType()),
+        StructField("ITEM_DEPARTMENT", StringType()),
+        StructField("ITEM_VALUE", FloatType())]
+    )
+
+    items_df = spark.createDataFrame([],items_schema)
+
+    departments = []
+    for i in range(50):
+        Faker.seed(i)
+        departments.append(fake.word())
+
+    for i in range(300):
+        Faker.seed(i)
+        item_value = fake.pyfloat(min_value=0,max_value=10000)
+        item_ean = fake.ean()
+        item_dept = fake.word(ext_word_list=departments)
+        item_id = fake.unique.random_int(0,300)
+
+        item_row = spark.createDataFrame([(item_id,item_ean,item_dept,item_value)], items_schema)
+
+        items_df = items_df.union(item_row)
+
+    Faker.seed()
+
+#generate_customer_data()
+generate_items_data()
