@@ -42,3 +42,5 @@ def generate_customer_data():
         new_df = new_df.union(new_row)
 
     new_df.write.mode('append').saveAsTable('CUSTOMER_DATA')
+
+generate_customer_data()
