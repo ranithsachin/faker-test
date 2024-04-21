@@ -115,4 +115,4 @@ def generate_transactions_data():
     product_df.write.mode('append').saveAsTable('PRODUCT_TRANSACTION')
 
 #generate_customer_data()
-generate_items_data()
+generate_transactions_data()
