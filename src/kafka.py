@@ -1,7 +1,18 @@
 from kafka import KafkaProducer
+import json
 
-class kafkaQueue:
+class KafkaQueue:
+    """
+    Produce and consume messages to kafka
+    """
     
-    def producer(self,message):
-        producer = KafkaProducer(bootstrap_servers=['broker1:1234'])
+    def producer(self,message: json)->None:
+        """
+        Produce json messages to kafka
+
+        Args:
+            message: incoming json message
+        """
+        producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
+        producer.send(message)
 

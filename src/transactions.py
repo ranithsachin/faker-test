@@ -53,6 +53,10 @@ class Transaction:
                 cust_number = customer_number_list[rand_idx]
 
                 creditcard_row = spark.createDataFrame([(trans_id,cust_number,trans_value,trans_date_time,item_quantity)],creditcard_transaction_schema)
+                cc_json_array = creditcard_row.toJSON().collect()
+                # print(cc_json_array)
+                # util.kafka_producer(cc_json_array)
+                
                 creditcard_df = creditcard_df.union(creditcard_row)
 
                 product_row = spark.createDataFrame([(trans_id,(item.iloc[0]['ITEM_EAN']),(item.iloc[0]['ITEM_DEPARTMENT']),float(item.iloc[0]['ITEM_VALUE']),int(item.iloc[0]['ITEM_ID']),item_quantity)],product_transaction_schema)
